@@ -800,6 +800,250 @@ footer {
   border-radius: var(--radius-md);
 }
 
+/* Call styles */
+.call-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.call-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.call-container {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-streams {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.local-video-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 200px;
+  height: 150px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.local-video-container:hover {
+  transform: scale(1.1);
+}
+
+.local-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remote-video-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+}
+
+.remote-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.call-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+}
+
+.call-control-button {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.call-control-button:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.call-control-button.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+.call-control-button i {
+  font-size: 1.2rem;
+}
+
+.call-info {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.call-info i {
+  font-size: 1rem;
+}
+
+.chat-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.message.sent {
+  justify-content: flex-end;
+}
+
+.message.received {
+  justify-content: flex-start;
+}
+
+.message-content {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.message.sent .message-content {
+  background-color: var(--primary-color);
+  color: #fff;
+  align-self: flex-end;
+}
+
+.message.system-message {
+  align-self: center;
+  text-align: center;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.system-message-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary-background-color);
+  color: var(--secondary-text-color);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.system-message-content i {
+  margin-right: 8px;
+  color: var(--accent-color);
+}
+
+.message p {
+  margin: 0;
+  word-break: break-word;
+}
+
+.message.received .message-content {
+  background-color: var(--secondary-background-color);
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  background-color: var(--bg-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  margin-right: 1rem;
+}
+
+.chat-input button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+  background-color: var(--primary-hover);
+}
+
 /* Swap cards */
 .swap-card {
   background: var(--bg-primary);
@@ -9612,13 +9856,13 @@ footer {
 
 /* My Swaps Section */
 .my-swaps-section .container {
-    max-width: 1200px;
+  max-width: 1200px;
 }
 
 .my-swaps-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
     margin-bottom: var(--spacing-lg);
     padding-bottom: var(--spacing-lg);
     border-bottom: 1px solid var(--border-color);
@@ -9631,10 +9875,10 @@ footer {
 
 .swap-tab {
     padding: var(--spacing-sm) var(--spacing-md);
-    border: none;
+  border: none;
     background: transparent;
     color: var(--text-tertiary);
-    cursor: pointer;
+  cursor: pointer;
     border-radius: var(--radius-md);
     font-weight: 500;
 }
@@ -9652,7 +9896,7 @@ footer {
     grid-template-columns: 300px 1fr;
     gap: var(--spacing-lg);
     height: 70vh;
-    border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     background: var(--bg-primary);
     overflow: hidden;
@@ -9665,8 +9909,8 @@ footer {
 }
 .chat-list-item {
     padding: var(--spacing-md);
-    border-radius: var(--radius-md);
-    cursor: pointer;
+  border-radius: var(--radius-md);
+  cursor: pointer;
     border-bottom: 1px solid var(--border-color);
 }
 .chat-list-item:hover {
@@ -9674,7 +9918,7 @@ footer {
 }
 .chat-list-item.active {
     background: var(--primary);
-    color: white;
+  color: white;
 }
 .chat-list-item.active .last-message {
     color: color-mix(in srgb, white 70%, transparent);
@@ -9710,7 +9954,7 @@ footer {
 
 .chat-view .chat-header {
     padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9734,7 +9978,7 @@ footer {
     font-weight: 500;
 }
 .status.online {
-    color: var(--success);
+  color: var(--success);
 }
 .status.offline {
     color: var(--text-tertiary);
@@ -9778,10 +10022,10 @@ footer {
     max-width: 70%;
     line-height: 1.4;
     border-bottom: 0;
-    position: relative;
+  position: relative;
 }
 .message .timestamp {
-    display: block;
+  display: block;
     font-size: 0.75rem;
     text-align: right;
     margin-top: var(--spacing-xs);
@@ -9806,7 +10050,7 @@ footer {
 }
 .chat-image {
     max-width: 100%;
-    border-radius: var(--radius-md);
+  border-radius: var(--radius-md);
     margin-bottom: var(--spacing-xs);
     cursor: pointer;
 }
@@ -9814,7 +10058,7 @@ footer {
 /* Chat bubble tails */
 .message::after {
     content: '';
-    position: absolute;
+  position: absolute;
     bottom: 0;
     width: 0;
     height: 0;
@@ -9834,7 +10078,7 @@ footer {
 }
 
 .message-meta {
-    display: flex;
+  display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: var(--spacing-xs);
@@ -9866,8 +10110,8 @@ footer {
     border: none;
     cursor: pointer;
     display: none; /* Hidden by default */
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
     font-size: 1.2rem;
     box-shadow: var(--shadow-md);
     z-index: 10;
@@ -10799,7 +11043,7 @@ footer {
     flex-grow: 1;
     padding: var(--spacing-lg);
     overflow-y: auto;
-    display: flex;
+  display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
 }
@@ -10827,7 +11071,7 @@ footer {
 }
 .message.received {
     background: var(--bg-tertiary);
-    color: var(--text-primary);
+  color: var(--text-primary);
     align-self: flex-start;
     border-bottom-left-radius: var(--radius-sm);
 }
@@ -10866,7 +11110,7 @@ footer {
 }
 
 .message-meta {
-    display: flex;
+  display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: var(--spacing-xs);
@@ -10896,7 +11140,7 @@ footer {
     height: 40px;
     border-radius: 50%;
     border: none;
-    cursor: pointer;
+  cursor: pointer;
     display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;

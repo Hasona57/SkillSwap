@@ -11,6 +11,7 @@ const modals = {};
 // State
 let activeChatId = null;
 let editingSwapId = null;
+let activeChatPartner = null;
 
 export function initUI() {
     mainContent = $('#mainContent');
@@ -483,9 +484,6 @@ function bindChatFormEvents(chatId, partner) {
         fileUpload.value = ''; // Reset file input
     };
 
-    // Simulated call buttons
-    $('#audioCallBtn').onclick = () => showCallOverlay(partner, 'audio');
-    $('#videoCallBtn').onclick = () => showCallOverlay(partner, 'video');
 }
 
 function renderStatus(status) {
@@ -496,67 +494,6 @@ function renderStatus(status) {
         return '<i class="fas fa-check-double"></i>';
     }
     return '';
-}
-
-
-function showCallOverlay(partner, callType) {
-    console.log(`[Call] Attempting to start ${callType} call with:`, partner);
-
-    const overlay = $('#callOverlay');
-    const callStatusEl = $('#callStatus');
-    const hangUpBtn = $('#hangUpBtn');
-    let callTimeout;
-
-    $('#callerName').textContent = partner.name;
-    overlay.style.display = 'flex';
-
-    // For demo purposes, we'll assume the partner is always online to trigger the call sequence.
-    // In a real app, you would have a more robust online status check (e.g., WebSockets).
-    const isOnline = true; 
-    console.log(`[Call] Is partner online? ${isOnline} (simulation)`);
-
-    if (!isOnline) {
-        callStatusEl.textContent = 'User is unavailable';
-        setTimeout(() => {
-            overlay.style.display = 'none';
-        }, 2000);
-        return;
-    }
-    
-    callStatusEl.textContent = `${callType === 'video' ? 'Video' : 'Audio'} call - Ringing...`;
-    console.log('[Call] Ringing...');
-
-    // Simulate call sequence
-    callTimeout = setTimeout(() => {
-        const coinToss = Math.random();
-        console.log(`[Call] Coin toss for answer/reject: ${coinToss}`);
-        if (coinToss > 0.3) { // 70% chance of answering
-            callStatusEl.textContent = '00:01';
-            console.log('[Call] Call answered.');
-            // Simple timer
-            let seconds = 1;
-            callTimeout = setInterval(() => {
-                seconds++;
-                const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-                const secs = (seconds % 60).toString().padStart(2, '0');
-                callStatusEl.textContent = `${mins}:${secs}`;
-            }, 1000);
-        } else { // 30% chance of rejecting
-            callStatusEl.textContent = 'Call rejected';
-            console.log('[Call] Call rejected.');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 2000);
-        }
-    }, 4000); // Ring for 4 seconds
-
-
-    hangUpBtn.onclick = () => {
-        clearInterval(callTimeout);
-        overlay.style.display = 'none';
-        showToast('Call ended.', 'info');
-        console.log('[Call] Hung up by user.');
-    };
 }
 
 

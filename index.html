@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="call.css">
   
   <!-- Basic favicon -->
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
@@ -217,8 +216,8 @@
                 </div>
               </div>
               <div class="chat-actions">
-                <button class="btn-icon" id="audioCallBtn" title="Audio Call"><i class="fas fa-phone"></i></button>
-                <button class="btn-icon" id="videoCallBtn" title="Video Call"><i class="fas fa-video"></i></button>
+                <button class="btn-icon" id="audioCallBtn" title="Audio Call" style="display: none;"><i class="fas fa-phone"></i></button>
+                <button class="btn-icon" id="videoCallBtn" title="Video Call" style="display: none;"><i class="fas fa-video"></i></button>
               </div>
             </div>
             <div class="messages-list" id="messagesList"></div>
@@ -349,32 +348,6 @@
   <div id="imageModal" class="modal">
       <span class="close-modal">&times;</span>
       <img class="modal-content" id="modalImage">
-  </div>
-
-  <!-- Call Overlay -->
-  <div id="callOverlay">
-    <div id="callContainer">
-      <div id="callerAvatar"><i class="fas fa-user"></i></div>
-      <h3 id="callerName"></h3>
-      <p id="callStatus"></p>
-      <p id="callTimer"></p>
-      <div id="callControls">
-          <button class="call-control-btn">
-              <i class="fas fa-microphone-slash"></i>
-              <span>Mute</span>
-          </button>
-          <button class="call-control-btn">
-              <i class="fas fa-th"></i>
-              <span>Keypad</span>
-          </button>
-          <button class="call-control-btn">
-              <i class="fas fa-volume-up"></i>
-              <span>Speaker</span>
-          </button>
-      </div>
-      <button id="hangUpBtn"><i class="fas fa-phone"></i></button>
-      <video id="localVideoPreview" autoplay muted playsinline></video>
-    </div>
   </div>
 
   <!-- Scripts -->
