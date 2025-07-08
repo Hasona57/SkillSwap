@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>SkillSwap - Share Your Skills, Learn New Ones</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="call.css">
+  
+  <!-- Basic favicon -->
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWloAWlpaAFpaWgBaWloAWlpaAFpaWgBaWloAWlpaAFpaWgBaWloAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWloDWlpaLVpaWmNaWlqJWlpaiVpaWmNaWlotWlpaA1paWgBaWloAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWloaWlpajFpaWuxaWloaWlpaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWlo3Wlpa0VpaWtFaWlo3WlpaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWlo3Wlpa0VpaWtFaWlo3WlpaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWloaWlpajFpaWoxaWloaWlpaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFpaWgBaWloDWlpaLVpaWi1aWloDWlpaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"></link>
+</head>
+<body>
+  <!-- Initial loading state -->
+  <div class="initial-loader" role="progressbar" aria-label="Loading application">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- App shell -->
+  <div id="appShell" class="app-shell">
+    <header role="banner">
+      <nav class="main-nav">
+        <div class="nav-logo">
+          <i class="fas fa-exchange-alt"></i>
+          <span>SkillSwap</span>
+        </div>
+        <div class="nav-controls">
+          <div class="auth-buttons" id="authButtons">
+            <button class="btn auth-button login-button" data-action="login">
+              <i class="fas fa-sign-in-alt"></i>
+              Login
+            </button>
+            <button class="btn auth-button signup-button" data-action="signup">
+              <i class="fas fa-user-plus"></i>
+              Sign Up
+            </button>
+          </div>
+          <div class="user-menu" id="userMenu" style="display: none;">
+            <button class="user-menu-button">
+              <i class="fas fa-user-circle"></i>
+              <span id="userName">User</span>
+            </button>
+            <div class="user-menu-dropdown">
+              <a href="#" class="user-menu-item" id="profileLink">
+                <i class="fas fa-user"></i>
+                Profile
+              </a>
+              <a href="#" class="user-menu-item" id="mySwapsLink">
+                <i class="fas fa-exchange-alt"></i>
+                My Swaps
+              </a>
+              <a href="#" class="user-menu-item" id="messagesLink">
+                <i class="fas fa-comments"></i>
+                Messages
+              </a>
+              <a href="#" class="user-menu-item" id="logoutButton">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+          <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </nav>
+      
+      <!-- Auth Modal -->
+      <div id="authModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="authModalTitle">Welcome Back</h2>
+            <button class="close-modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="auth-tabs">
+              <button class="auth-tab active" data-tab="login">Login</button>
+              <button class="auth-tab" data-tab="signup">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+              <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" required>
+                <div class="validation-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" required>
+                <div class="validation-feedback"></div>
+              </div>
+              <button type="submit" class="submit-btn">
+                <span class="btn-text">Login</span>
+                <div class="loader"></div>
+              </button>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+              <div class="form-group">
+                <label for="signupName">Full Name</label>
+                <input type="text" id="signupName" required minlength="2">
+                <div class="validation-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" required>
+                <div class="validation-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" required minlength="8">
+                <div class="password-strength"></div>
+                <div class="validation-feedback"></div>
+                <small class="hint">Password must be at least 8 characters long and contain uppercase, lowercase, numbers, and special characters</small>
+              </div>
+              <button type="submit" class="submit-btn">
+                <span class="btn-text">Create Account</span>
+                <div class="loader"></div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <section class="hero-section">
+        <div class="hero-content">
+          <h2>Share Your Skills, Learn New Ones</h2>
+          <p>Join our community of lifelong learners and skilled teachers. Exchange knowledge, grow together.</p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <i class="fas fa-users"></i>
+              <span id="userCount">1,234</span>
+              <label>Members</label>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-handshake"></i>
+              <span id="swapCount">567</span>
+              <label>Swaps</label>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-graduation-cap"></i>
+              <span id="skillCount">89</span>
+              <label>Skills</label>
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main id="mainContent" class="main-content">
+      <!-- Profile Section -->
+      <section id="profileSection" class="profile-section" style="display: none;">
+        <h2>My Profile</h2>
+        <div class="profile-container">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-info">
+              <h3 id="profileName"></h3>
+              <p id="profileEmail"></p>
+            </div>
+          </div>
+          <div class="profile-stats">
+            <div class="stat-item">
+              <i class="fas fa-exchange-alt"></i>
+              <span id="userSwapsCount">0</span>
+              <label>My Swaps</label>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-comments"></i>
+              <span id="activeChatsCount">0</span>
+              <label>Active Chats</label>
+            </div>
+          </div>
+          <div class="profile-actions">
+            <button id="editProfileBtn" class="btn">
+              <i class="fas fa-edit"></i>
+              Edit Profile
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- My Swaps Section -->
+      <section id="mySwapsSection" class="my-swaps-section" style="display: none;">
+        <h2>My Swaps</h2>
+        <div class="my-swaps-header">
+          <button id="createSwapBtn" class="btn primary">
+            <i class="fas fa-plus"></i>
+            Create New Swap
+          </button>
+        </div>
+        <div id="mySwapsGrid" class="swaps-grid"></div>
+      </section>
+
+      <!-- Messages Section -->
+      <section id="messagesSection" class="messages-section" style="display: none;">
+        <h2>My Messages</h2>
+        <div class="messages-container">
+          <div class="chat-list" id="chatList"></div>
+          <div class="chat-view" id="chatView">
+            <div class="chat-header">
+              <div class="chat-partner-info">
+                <i class="fas fa-user-circle"></i>
+                <div>
+                  <h3 id="chatPartnerName">Select a conversation</h3>
+                  <small id="chatPartnerStatus" class="status offline">Offline</small>
+                </div>
+              </div>
+              <div class="chat-actions">
+                <button class="btn-icon" id="audioCallBtn" title="Audio Call"><i class="fas fa-phone"></i></button>
+                <button class="btn-icon" id="videoCallBtn" title="Video Call"><i class="fas fa-video"></i></button>
+              </div>
+            </div>
+            <div class="messages-list" id="messagesList"></div>
+            <button id="scrollToBottomBtn" class="scroll-to-bottom">
+              <i class="fas fa-arrow-down"></i>
+            </button>
+            <div class="chat-footer">
+              <div id="typingIndicator" class="typing-indicator"></div>
+              <div class="message-form">
+                  <label for="file-upload" class="btn-icon attachment-btn">
+                      <i class="fas fa-paperclip"></i>
+                  </label>
+                  <input type="file" id="file-upload" style="display: none;" accept="image/*,video/*">
+                  <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
+                  <button id="send-btn" class="btn-icon send-btn"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Swaps Section -->
+      <section id="featuredSwapsSection" class="featured-section">
+          <h2 style="text-align: center;">Explore Skill Swaps</h2>
+          <div id="swapsGrid" class="swaps-grid">
+              <!-- Swap cards will be dynamically inserted here -->
+          </div>
+      </section>
+
+      <!-- Create Swap Modal -->
+      <div id="createSwapModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Create New Swap</h2>
+            <button class="close-modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form id="createSwapForm" class="skill-form">
+              <div class="form-group">
+                <label for="teach">Skill You Can Teach</label>
+                <input type="text" id="teach" name="teach" required>
+              </div>
+              <div class="form-group">
+                <label for="learn">Skill You Want to Learn</label>
+                <input type="text" id="learn" name="learn" required>
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="tags">Tags (comma-separated)</label>
+                <input type="text" id="tags" name="tags">
+              </div>
+              <button type="submit" class="submit-btn">
+                <span class="btn-text">Create Swap</span>
+                <div class="loader"></div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <h3>Create Profile</h3>
+            <p>Sign up and list your skills and interests</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <h3>Find Matches</h3>
+            <p>Discover people with complementary skills</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Connect</h3>
+            <p>Start learning and teaching together</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About SkillSwap</h3>
+          <p>SkillSwap is a community-driven platform where people can exchange knowledge and skills. Our mission is to make learning accessible and interactive for everyone.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">How It Works</a></li>
+            <li><a href="#">Success Stories</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect</h3>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 SkillSwap. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast notifications -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Alert Container -->
+  <div id="alertContainer" class="alert-container"></div>
+
+  <div id="imageModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="modalImage">
+  </div>
+
+  <!-- Call Overlay -->
+  <div id="callOverlay">
+    <div id="callContainer">
+      <div id="callerAvatar"><i class="fas fa-user"></i></div>
+      <h3 id="callerName"></h3>
+      <p id="callStatus"></p>
+      <p id="callTimer"></p>
+      <div id="callControls">
+          <button class="call-control-btn">
+              <i class="fas fa-microphone-slash"></i>
+              <span>Mute</span>
+          </button>
+          <button class="call-control-btn">
+              <i class="fas fa-th"></i>
+              <span>Keypad</span>
+          </button>
+          <button class="call-control-btn">
+              <i class="fas fa-volume-up"></i>
+              <span>Speaker</span>
+          </button>
+      </div>
+      <button id="hangUpBtn"><i class="fas fa-phone"></i></button>
+      <video id="localVideoPreview" autoplay muted playsinline></video>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
